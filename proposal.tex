@@ -1,0 +1,24 @@
+\documentclass{article}
+\usepackage[a4paper, total={6in, 8in}]{geometry}
+\title{Artificial Intelligence Poker Project Proposal}
+\author{John Steenbruggen, Samil Tekinoglu, Matthew Richardson, Dylan Attlesey}
+\date{March 25, 2025}
+\begin{document}
+\maketitle
+\section{Project Plan and Techniques}
+Our agent will use Monte Carlo tree search to estimate its win, loss, and draw probabilities given the known community cards and its hole cards. This search is to mitigate the combinatorially hard problem of directly calculating the probability that the opponent has a better hand. The agent will also track various features of the game including the raise/call/fold frequency of the opponent, current bets and size of the pot, and ratio of agent chips to opponent chips. These factors will all be fed into an evaluation function which will evaluate the quality of each action available to the agent. The specific parameters of this evaluation function will be learned through self-play, specifically using an evolutionary approach which iteratively pits a population of players against itself, keeping and mutating only the top performers.
+\section{Member Contributions}
+% - one person for turning parameters and applying reinforcement learning (John)
+% - one person for designing the heuristic, and tracking the relevant features of the game and opponent behaviour (Dylan)
+% - one person for implementing the tree search algorithm (Matt)
+% - one person to tie it together, applying the AI to make PyPoker API calls
+% ^^^ Samil I hope ur okay with this lol its the only part thats left. ^^^
+\subsection{John}
+I will be responsible for the reinforcement learning portions of the project, specifically in applying an evolutionary strategy to tune the weights of the heuristic function. In a population of $n$ agents, I will perform $2n^2$ match-ups, and keep the top-performing $k<n$ agents, whose weights are randomly perturbed to produce the next generation.
+\subsection{Samil}
+\subsection{Matthew}
+\subsection{Dylan}
+\section{Challenges and Preliminary Results}
+Each part of the approach has the potential to cause problems, stemming from the randomness inherent to poker. The Monte Carlo search to estimate the outcome probabilities can potentially give inaccurate results due to bad roll-outs. This problem obviously disappears as the number of roll-outs increases, so it is important that we implement this step efficiently. It may also be possible to directly calculate the probability of specific hands, which we will experiment with. Another problem that may occur is in the training of the weights. An agent which is trained well may indeed lose a game due to the possibility of receiving a bad hand. An obvious way that this can be fixed is by letting each agent play a large number of games, but this can be computationally expensive. A more efficient way of dealing with this problem is to perform each match-up twice, where in the second match-up, each agent receives the hole cards that the opponent received in the first match-up, and the community cards remain the same. This symmetry would allow us to directly compare how two distinct agents would perform in identical situations. The agent which performs better in both match-ups is the better agent. 
+\end{document}
+
